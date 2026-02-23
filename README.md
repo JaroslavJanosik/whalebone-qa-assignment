@@ -14,12 +14,12 @@ Automated tests covering:
 
 ### API — `/api/teams`  (`TeamsApiTests`)
 
-| Test                                                                | Description                                                  |
-|---------------------------------------------------------------------|--------------------------------------------------------------|
-| `verifyTeamsCountIs32`                                              | Response contains exactly 32 teams                           |
-| `verifyOldestTeamIsMontrealCanadiens`                               | Oldest team by `founded` is Montreal Canadiens (1909)        |
-| `verifyThereIsACityWithMoreThanOneTeam_andVerifyNewYorkTeamsByName` | At least one multi-team city; New York = Islanders + Rangers |
-| `verifyMetropolitanDivisionHas8Teams_byName`                        | Metropolitan division has exactly 8 named teams              |
+| Test                                    | Description                                                  |
+|-----------------------------------------|--------------------------------------------------------------|
+| `verifyTeamsCountIs32`                  | Response contains exactly 32 teams                           |
+| `verifyOldestTeamIsMontrealCanadiens`   | Oldest team by `founded` is Montreal Canadiens (1909)        |
+| `verifyThereIsACityWithMoreThanOneTeam` | At least one multi-team city; New York = Islanders + Rangers |
+| `verifyMetropolitanDivisionHas8Teams`   | Metropolitan division has exactly 8 named teams              |
 
 ### UI — UI Testing Playground  (`UiTestingPlaygroundTests`)
 
@@ -27,7 +27,7 @@ Automated tests covering:
 |------------------------------------------------|--------------------------------------------------------------|
 | `sampleApp_coverAllFunctionalities`            | Successful login → logout → invalid login                    |
 | `loadDelay_pageLoadsInReasonableTime`          | Delayed button appears within 10 s                           |
-| `progressBar_followScenario_waitTo75_thenStop` | Start → wait to ≥75% → stop → assert final value in [75, 77] |
+| `progressBar_followScenario_waitTo75_thenStop` | Start → wait to ≥75% → stop → assert final value in [75, 80] |
 
 ### Scraping  (`OldestNHLTeamRosterScrapeTests`)
 
@@ -158,6 +158,6 @@ All values can be overridden via `-Dkey=value`.
 - `ui.trace.onFailure` (default: `true`)
 - `ui.video.onFailure` (default: `true`)
 - `ui.screenshot.onFailure` (default: `true`)
-- `ui.retry.count` (default: `0`)
+- `ui.retry.count` (default: `1`)
 - `api.retry.count` (default: `0`)
 
