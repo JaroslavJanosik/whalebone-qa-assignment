@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Teams API response",
+  "type": "object",
+  "required": [
+    "teams"
+  ],
+  "properties": {
+    "teams": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "location",
+          "founded",
+          "firstYearOfPlay",
+          "division",
+          "officialSiteUrl"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "location": {
+            "type": "string",
+            "minLength": 1
+          },
+          "founded": {
+            "type": "integer"
+          },
+          "firstYearOfPlay": {
+            "type": "integer"
+          },
+          "officialSiteUrl": {
+            "type": "string",
+            "minLength": 1
+          },
+          "division": {
+            "type": "object",
+            "required": [
+              "id",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

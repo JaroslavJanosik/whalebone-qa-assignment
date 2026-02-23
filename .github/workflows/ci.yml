@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image (with layer cache)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          tags: qa-assignment-tests:ci
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run tests in container
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          exit_code=0
+          docker run --name qa-tests -e HEADED=false qa-assignment-tests:ci || exit_code=$?
+
+          docker cp qa-tests:/app/target/allure-results ./allure-results || true
+          docker cp qa-tests:/app/target/site/allure-maven-plugin ./allure-report || true
+          docker cp qa-tests:/app/target/surefire-reports ./surefire-reports || true
+
+          docker rm -f qa-tests || true
+
+          exit "$exit_code"
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+          if-no-files-found: warn
+
+      - name: Upload Allure HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+          if-no-files-found: warn
+
+      - name: Upload Surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: surefire-reports
+          if-no-files-found: warn

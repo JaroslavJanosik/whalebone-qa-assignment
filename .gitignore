@@ -1,0 +1,63 @@
+# OS
+.DS_Store
+Thumbs.db
+__MACOSX/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.project
+.classpath
+.settings/
+out/
+bin/
+
+# Build
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+logs/
+
+# Allure
+allure-results/
+allure-report/
+.allure/
+
+# Playwright
+playwright-artifacts/
+playwright-report/
+test-results/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Coverage
+jacoco.exec
+jacoco*.exec
+coverage/
+
+# Secrets
+.env
+.env.*
+!*.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Temp
+*.tmp
+*.swp
+*.swo

@@ -1,0 +1,8 @@
+services:
+  tests:
+    build: .
+    environment:
+      - HEADED=false
+    volumes:
+      - ./target/allure-results:/app/target/allure-results
+      - ./target/surefire-reports:/app/target/surefire-reports
