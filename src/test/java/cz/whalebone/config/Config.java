@@ -11,7 +11,7 @@ import java.util.Set;
 public final class Config {
 
     private static final Properties PROPS = load("config.properties");
-    private static final Set<String> BROWSERS = Set.of("chromium", "firefox", "webkit", "chrome", "edge", "msedge");
+    private static final Set<String> BROWSERS = Set.of("chromium", "firefox", "webkit", "safari", "chrome", "edge", "msedge");
 
     private Config() {
     }
@@ -35,22 +35,31 @@ public final class Config {
     }
 
     public static String uiBrowser() {
-        String v = opt("ui.browser", "chromium").toLowerCase(Locale.ROOT);
-        if (!BROWSERS.contains(v))
-            throw new IllegalStateException("ui.browser must be one of " + BROWSERS + ", got: " + v);
-        return switch (v) {
+        String raw = uiBrowserRaw();
+        return switch (raw) {
             case "chrome", "edge", "msedge" -> "chromium";
-            default -> v;
+            default -> raw;
         };
     }
 
     public static String uiBrowserChannel() {
-        String v = opt("ui.browser", "chromium").toLowerCase(Locale.ROOT);
-        return switch (v) {
+        String raw = uiBrowserRaw();
+        return switch (raw) {
             case "chrome" -> "chrome";
             case "edge", "msedge" -> "msedge";
             default -> null;
         };
+    }
+
+    private static String uiBrowserRaw() {
+        String v = opt("ui.browser", "chromium")
+                .trim()
+                .toLowerCase(Locale.ROOT);
+
+        if (!BROWSERS.contains(v)) {
+            throw new IllegalStateException("ui.browser must be one of " + BROWSERS + ", got: " + v);
+        }
+        return v;
     }
 
     public static boolean uiHeaded() {

@@ -109,10 +109,9 @@ public final class PlaywrightFixture implements AutoCloseable {
                 .setHeadless(!Config.uiHeaded())
                 .setSlowMo(Config.uiSlowMoMs());
 
-        if ("msedge".equals(browserName) || "edge".equals(browserName)) {
-            launchOptions.setChannel("msedge");
-        } else if ("chrome".equals(browserName) || "googlechrome".equals(browserName)) {
-            launchOptions.setChannel("chrome");
+        String channel = Config.uiBrowserChannel();
+        if (channel != null && !channel.isBlank()) {
+            launchOptions.setChannel(channel);
         }
 
         return browserType.launch(launchOptions);
